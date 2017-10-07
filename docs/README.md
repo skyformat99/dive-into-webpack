@@ -66,10 +66,9 @@
 - [4-16 优化总结](4优化/4-16优化总结.md)
 
 #### [第5章 原理](5原理/README.md)
-- [Webpack 工作原理概括]
-- [Webpack 生命周期](5原理/Webpack生命周期.md)
-- [Webpack 输出文件分析](5原理/Webpack输出文件分析.md)
-- [编写 Webpack Loader]
-- [编写 Webpack Plugin]
-- [Webpack API 解析](5原理/WebpackAPI解析.md)
-- [调试 Webpack]
+- [5-1 工作原理概括](5-1工作原理概括.md)
+- [5-2 输出文件分析](5-2输出文件分析.md)
+- [5-3 编写 Loader](5-3编写Loader.md)
+- [5-4 编写 Plugin](5-4编写Plugin.md)
+- [5-5 Webpack API](5-5WebpackAPI.md)
+- [5-6 调试 Webpack](5-6调试Webpack.md)
