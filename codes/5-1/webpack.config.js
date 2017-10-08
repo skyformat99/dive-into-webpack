@@ -8,6 +8,14 @@ class TestPlugin {
   apply(compiler) {
     console.log('@plugin apply');
 
+    compiler.plugin('environment', (options, callback) => {
+      console.log('@environment');
+    });
+
+    compiler.plugin('after-environment', (options, callback) => {
+      console.log('@after-environment');
+    });
+
     compiler.plugin('entry-option', (options, callback) => {
       console.log('@entry-option');
     });
@@ -18,14 +26,6 @@ class TestPlugin {
 
     compiler.plugin('after-resolvers', (options, callback) => {
       console.log('@after-resolvers');
-    });
-
-    compiler.plugin('environment', (options, callback) => {
-      console.log('@environment');
-    });
-
-    compiler.plugin('after-environment', (options, callback) => {
-      console.log('@after-environment');
     });
 
     compiler.plugin('before-run', (options, callback) => {
@@ -82,11 +82,6 @@ class TestPlugin {
       console.log('@should-emit');
     });
 
-    compiler.plugin('need-additional-pass', (options, callback) => {
-      console.log('@need-additional-pass');
-      callback();
-    });
-
     compiler.plugin('emit', (options, callback) => {
       console.log('@emit');
       callback();
@@ -110,9 +105,6 @@ class TestPlugin {
       console.log('@invalid');
     });
 
-    compiler.plugin('watch-close', (options, callback) => {
-      console.log('@watch-close');
-    });
   }
 }
 

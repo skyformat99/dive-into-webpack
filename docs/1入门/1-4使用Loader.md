@@ -33,7 +33,7 @@ module.exports = {
       {
         // 用正则去匹配要用该 loader 转换的 CSS 文件
         test: /\.css$/,
-        loaders: ['style-loader', 'css-loader?minimize'],
+        use: ['style-loader', 'css-loader?minimize'],
       }
     ]
   }
@@ -46,7 +46,7 @@ Loader 可以看作具有文件转换功能的翻译员，配置里的 `module.r
 - `loaders` 属性需要传入一个数组，Loader 的执行顺序是由后到前的；
 - 每一个 Loader 都可以通过 URL querystring 的方式传入参数，例如 `css-loader?minimize` 中的 `minimize` 告诉 `css-loader` 要开启 CSS 压缩。
 
-想知道Loader 具体支持哪些属性，则需要我们查阅文档，例如 `css-loader` 还有很多用法，我们可以在 [css-loader 主页](https://github.com/webpack-contrib/css-loader) 上查到。
+想知道 Loader 具体支持哪些属性，则需要我们查阅文档，例如 `css-loader` 还有很多用法，我们可以在 [css-loader 主页](https://github.com/webpack-contrib/css-loader) 上查到。
 
 在重新执行 Webpack 构建前要先安装新引入的 Loader：
 ```bash
@@ -58,3 +58,23 @@ npm i -D style-loader css-loader
 也许你认为这样做会导致 JavaScript 文件变大并导致加载网页时间变长，想让 Webpack 单独输出 CSS 文件。下一节[1-5 使用Plugin](1-5使用Plugin.md)将教你如何通过 Webpack Plugin 机制来实现。
 
 > 本实例[提供项目完整代码](http://webpack.wuhaolin.cn/1-4使用Loader.zip)
+
+给 Loader 传入属性的方式除了有 querystring 外，还可以通过 Object 传入，以上的 Loader 配置可以修改为如下：
+```js
+use: [
+  'style-loader', 
+  {
+    loader:'css-loader',
+    query:{
+      minimize:true,
+    }
+  }
+]
+```
+
+除了在 `webpack.config.js` 配置文件中配置 Loader 外，还可以在源码中指定用什么 Loader 去处理文件。
+以加载 CSS 文件为例，修改上面例子中的 `main.js` 如下：
+```js
+require('style-loader!css-loader?minimize!./main.css');
+```
+这样就能指定对 `./main.css` 这个文件先采用 css-loader 在采用 style-loader 转换。
