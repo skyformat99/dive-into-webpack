@@ -65,7 +65,7 @@ use: [
   'style-loader', 
   {
     loader:'css-loader',
-    query:{
+    options:{
       minimize:true,
     }
   }

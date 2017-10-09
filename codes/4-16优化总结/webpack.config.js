@@ -66,7 +66,7 @@ module.exports = {
       id: 'ui-component',
       loaders: [{
         loader: 'ui-component-loader',
-        query: {
+        options: {
           lib: 'antd',
           style: 'style/index.css',
           camel2: '-'
