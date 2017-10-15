@@ -43,7 +43,7 @@ Loader 可以看作具有文件转换功能的翻译员，配置里的 `module.r
 如上配置告诉 Webpack 在遇到以 `.css` 结尾的文件时先使用 `css-loader` 读取 CSS 文件，再交给 `style-loader` 把 CSS 内容注入到 JavaScript 里。
 在配置 Loader 时需要注意的是：
 
-- `loaders` 属性需要传入一个数组，Loader 的执行顺序是由后到前的；
+- `use` 属性需要传入一个数组，Loader 的执行顺序是由后到前的；
 - 每一个 Loader 都可以通过 URL querystring 的方式传入参数，例如 `css-loader?minimize` 中的 `minimize` 告诉 `css-loader` 要开启 CSS 压缩。
 
 想知道 Loader 具体支持哪些属性，则需要我们查阅文档，例如 `css-loader` 还有很多用法，我们可以在 [css-loader 主页](https://github.com/webpack-contrib/css-loader) 上查到。
