@@ -179,3 +179,5 @@ module.exports = function(source) {
 **this.clearDependencies**：清除当前正在处理文件的所有依赖，使用方法为 `clearDependencies()`。
 
 **this.emitFile**：输出一个文件，使用方法为 `emitFile(name: string, content: Buffer|string, sourceMap: {...})`。
+
+其它没有提到的 API 可以去 [Webpack 官网](https://webpack.js.org/api/loaders/) 查看。 
