@@ -181,3 +181,51 @@ module.exports = function(source) {
 **this.emitFile**：输出一个文件，使用方法为 `emitFile(name: string, content: Buffer|string, sourceMap: {...})`。
 
 其它没有提到的 API 可以去 [Webpack 官网](https://webpack.js.org/api/loaders/) 查看。 
+
+
+##### 加载本地 Loader
+在开发 Loader 的过程中，为了测试编写的 Loader 是否能正常工作，需要把它配置到 Webpack 中后，才可能会调用该 Loader。
+在前面的章节中，使用的 Loader 都是通过 Npm 安装的，要使用 Loader 时会直接使用 Loader 的名称，代码如下：
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.css/,
+        use: ['style-loader'],
+      },
+    ]
+  },
+};
+```
+如果还采取以上的方法去使用本地开发的 Loader 将会很麻烦，因为你需要确保编写的 Loader 的源码是在 `node_modules` 目录下。
+为此你需要先把编写的 Loader 发布到 Npm 仓库后再安装到本地项目使用。
+
+解决以上问题的便捷方法有两种，分布如下：
+
+###### Npm link
+Npm link 专门用于开发和调试本地 Npm 模块，能做到在不发布模块的情况下，把本地的一个正在开发的模块的源码链接到项目的 `node_modules` 目录下，让项目可以直接使用本地的 Npm 模块。
+由于是通过软链接的方式实现的，编辑了本地的 Npm 模块代码，在项目项目中也能使用到编辑后的代码。
+
+完成 Npm link 的步骤如下：
+
+1. 确保正在开发的本地 Npm 模块（也就是正在开发的 Loader）的 `package.json` 已经正确配置好；
+2. 在本地 Npm 模块根目录下执行 `npm link`，把正在本地模块注册到全局；
+3. 在项目根目录下执行 `npm link loader-name`，把第2步注册到全局的本地 Npm 模块链接到项目的 `node_moduels` 下，其中的 `loader-name` 是指在第1步中的 `package.json` 文件中配置的模块名称。
+
+链接好 Loader 到项目后你就可以像使用一个真正的 Npm 模块一样使用本地的 Loader 了。
+
+###### ResolveLoader
+在 [2-7其它配置项](../2配置/2-7其它配置项.md#ResolveLoader) 中曾介绍过 ResolveLoader 用于配置 Webpack 如何寻找 Loader。
+默认情况下只会去 `node_modules` 目录下寻找，为了让 Webpack 加载放在本地项目中的 Loader 需要修改 `resolveLoader.modules`。
+
+假如本地的 Loader 在项目目录中的 `./loaders/loader-name` 中，则需要如下配置：
+```js
+module.exports = {
+  resolveLoader:{
+    // 去哪个目录下寻找 Loader
+    modules: ['node_modules','./loaders/'],
+  }
+}
+```
+加上以上配置后 Webpack 即会去 `node_modules` 项目下寻找 Loader，也会去 `./loaders/` 目录下寻找。
