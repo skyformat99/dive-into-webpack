@@ -8,23 +8,23 @@ class TestPlugin {
   apply(compiler) {
     console.log('@plugin apply');
 
-    compiler.plugin('environment', (options, callback) => {
+    compiler.plugin('environment', (options) => {
       console.log('@environment');
     });
 
-    compiler.plugin('after-environment', (options, callback) => {
+    compiler.plugin('after-environment', (options) => {
       console.log('@after-environment');
     });
 
-    compiler.plugin('entry-option', (options, callback) => {
+    compiler.plugin('entry-option', (options) => {
       console.log('@entry-option');
     });
 
-    compiler.plugin('after-plugins', (options, callback) => {
+    compiler.plugin('after-plugins', (options) => {
       console.log('@after-plugins');
     });
 
-    compiler.plugin('after-resolvers', (options, callback) => {
+    compiler.plugin('after-resolvers', (options) => {
       console.log('@after-resolvers');
     });
 
@@ -43,11 +43,11 @@ class TestPlugin {
       callback();
     });
 
-    compiler.plugin('normal-module-factory', (options, callback) => {
+    compiler.plugin('normal-module-factory', (options) => {
       console.log('@normal-module-factory');
     });
 
-    compiler.plugin('context-module-factory', (options, callback) => {
+    compiler.plugin('context-module-factory', (options) => {
       console.log('@context-module-factory');
     });
 
@@ -56,15 +56,15 @@ class TestPlugin {
       callback();
     });
 
-    compiler.plugin('compile', (options, callback) => {
+    compiler.plugin('compile', (options) => {
       console.log('@compile');
     });
 
-    compiler.plugin('this-compilation', (options, callback) => {
+    compiler.plugin('this-compilation', (options) => {
       console.log('@this-compilation');
     });
 
-    compiler.plugin('compilation', (options, callback) => {
+    compiler.plugin('compilation', (options) => {
       console.log('@compilation');
     });
 
@@ -73,12 +73,32 @@ class TestPlugin {
       callback();
     });
 
+    compiler.plugin('compilation', (compilation) => {
+
+      compilation.plugin('build-module', (options) => {
+        console.log('@build-module');
+      });
+
+      compilation.plugin('normal-module-loader', (options) => {
+        console.log('@normal-module-loader');
+      });
+
+      compilation.plugin('program', (options, callback) => {
+        console.log('@program');
+        callback();
+      });
+
+      compilation.plugin('seal', (options) => {
+        console.log('@seal');
+      });
+    });
+
     compiler.plugin('after-compile', (options, callback) => {
       console.log('@after-compile');
       callback();
     });
 
-    compiler.plugin('should-emit', (options, callback) => {
+    compiler.plugin('should-emit', (options) => {
       console.log('@should-emit');
     });
 
@@ -92,7 +112,7 @@ class TestPlugin {
       callback();
     });
 
-    compiler.plugin('done', (options, callback) => {
+    compiler.plugin('done', (options) => {
       console.log('@done');
     });
 
@@ -101,7 +121,7 @@ class TestPlugin {
       callback();
     });
 
-    compiler.plugin('invalid', (options, callback) => {
+    compiler.plugin('invalid', (options) => {
       console.log('@invalid');
     });
 
